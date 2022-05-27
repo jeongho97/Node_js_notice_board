@@ -213,11 +213,8 @@ app.post('/answerAf',function(req,res){
 
         conn.query(sql1,params1,function(err,result,fields){
             if(err) console.log(err)
-
-            if(result.affectedRows>0){
+            else{
                 console.log("answer update success")
-            }else{
-                console.log("answer update fail")
             }
 
         });
