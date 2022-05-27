@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>글쓰기</h2>
+<div align="center">
+<form action="bbswriteAf" method="post">
+
+<table border="1">
+<col width="200"><col width="400">
+<tr>
+	<th>아이디</th>
+	<td><%=user %>
+	</td>
+</tr>
+<tr>
+	<th>제목</th>
+	<td><input type="text" name="title" size="60"></td>
+</tr>
+<tr>
+	<th>내용</th>
+	<td><textarea rows="20" cols="50" name="content"></textarea></td>
+</tr>
+<tr>
+	<td colspan="2" align="center">
+		<input type="submit" value="작성완료">
+	</td>
+</tr>
+
+
+
+</table>
+
+</form>
+</div>
+</body>
+</html>

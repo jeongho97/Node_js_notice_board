@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="javascript/jquery.twbsPagination.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script> -->
+
+</head>
+<body>
+<%
+// 댓글용 depth와 image를 추가하는 함수
+function arrow(depth){
+    var rs = "<img src='images/arrow.png' width='20px' height='20px'/>";
+    var nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
+    
+    var ts = "";
+    for( i = 0;i < depth; i++){
+        ts += nbsp;
+    }
+    
+    return depth==0?"":ts + rs;
+}
+
+%>
+<h3>여기는 list.ejs</h3>
+
+<h2>환영합니다. <%=user %>님 반갑습니다</h2>
+
+<div align="center">
+
+<table border="1">
+<col width="70"><col width="500"><col width="150">
+
+<tr>
+    <th>번호</th><th>제목</th><th>작성자</th>
+</tr>
+<%
+if(data == null || data.length == 0){
+%>
+	<tr>
+		<td colspan="3">작성된 글이 없습니다</td>
+	</tr>
+	<%
+}else{
+    %>   
+    <% data.forEach(function (data,index){ %>
+    <tr>
+        <td>
+            <%=index+1 %>
+        </td>   
+        <td>
+            <%- arrow( data.DEPTH ) %>  
+            <%
+                if(data.DEL==1){
+            %>
+                <%="이글은 작성자에 의해 삭제되었습니다" %>
+            <%
+            }else{
+            %>   
+            <a href='bbsdetail?seq=<%= data.SEQ %>'><%=data.TITLE %></a>
+        </td>
+            <%
+            }
+            %>
+        <td>
+            <%= data.ID %>
+        </td>            
+    </tr>
+    <% });%> 
+<%   
+}
+%>   
+</table>
+<br>
+
+<!-- <div class="container">
+    <nav aria-label="Page navigation" style="text-align: center;">
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
+</div> -->
+<div class="row d-flex justify-content-center">
+    <nav aria-label="Page navigation example" style="text-align: center;">
+        <ul class="pagination-sm" id="pagination"></ul>
+    </nav>   
+</div>
+
+<!-- 검색선택 -->
+<select id="choice">
+    <option value="sel">선택</option>
+    <option value="title">제목</option>
+    <option value="content">내용</option>
+    <option value="writer">작성자</option>
+</select>
+
+<!-- 검색창 -->
+<input id="search" placeholder="검색어입력" size="20" value="<%=search %>">
+
+<!-- 검색버튼 -->
+<button onclick="searchBbs(1)">검색</button>
+
+<br><br>
+
+<a href="bbswrite">글쓰기</a>
+
+<script>
+
+function searchBbs( pn ){
+    //search 버튼 눌렀을때는 pn은 0
+    var choice = document.getElementById("choice").value;
+    var search = document.getElementById("search").value;
+
+    location.href = "bbslist?choice=" + choice + "&search=" + search + "&pageNumber=" + pn;
+}
+
+let totalCount='<%=totalCount %>';   //글의 총수
+let pageSize=10;	//페이지 크기
+let pageNumber='<%=pageNumber %>';		//현재 페이지
+let _totalPages=totalCount/pageSize;
+if(totalCount % pageSize >0){
+	_totalPages++;
+}
+
+$('#pagination').twbsPagination({
+	  startPage: Number(pageNumber),
+	  totalPages: _totalPages,
+	  visiblePages: 10,
+	  first:'<span sria-hidden="true">«</span>',
+	  prev:"이전",
+	  next:"다음",
+	  last:'<span sria-hidden="true">»</span>',
+	  initiateStartPageClick: false,
+	  onPageClick: function (event, page) {
+	      //alert(page);
+          searchBbs(page);
+	  }
+});
+
+</script>
+<script>
+    $(document).ready(function() {
+        let search = "<%=search %>";
+        if(search == "") return;
+        
+        let obj = document.getElementById("choice");
+
+        obj.value = '<%=choice %>';
+        obj.setAttribute("selected", "selected");
+    });
+    </script>
+</div>
+
+</body>
+</html>

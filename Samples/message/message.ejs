@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+var process = "<%=proc %>";
+// alert(process);
+var msg = "<%=msg %>";
+
+
+
+
+if(process == "regi"){
+    if(msg == "OK") {
+            alert("성공적으로 가입되었습니다");
+            location.href = 'login';
+        }
+        else{
+            alert("다시 기입해 주십시오");
+            location.href = 'regi';
+        }
+}
+else if(process == "login"){
+    if(msg == "OK") {
+                alert("성공적으로 로그인하였습니다");
+                location.href = 'bbslist';
+            }
+            else{
+                alert("로그인에 실패하였습니다");
+                location.href = 'login';
+            }
+}
+else if(process == "write"){
+    if(msg == "OK") {
+                alert("성공적으로 글 작성 하였습니다");
+                location.href = 'bbslist';
+            }
+            else{
+                alert("글작성에 실패하였습니다");
+                location.href = 'bbswrite';
+            }
+}
+else if(process == "answer"){
+    if(msg == "OK") {
+                alert("성공적으로 답글을 작성 하였습니다");
+                location.href = 'bbslist';
+            }
+            else{
+                alert("답글작성에 실패하였습니다");
+                location.href = 'answer';
+            }
+}
+else if(process == "delete"){
+    
+    if(msg == "OK") {
+            alert("성공적으로 삭제되었습니다");
+            location.href = 'bbslist'
+        }
+        else{
+            alert("삭제에 실패하였습니다");
+            history.back();
+        } 
+}
+</script>  
+</body>

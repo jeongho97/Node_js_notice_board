@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>업데이트</h2>
+<div align="center">
+
+<form action="updateAf" method="post">
+<input type="hidden" name="seq" value="<%=data[0].SEQ %>">
+
+<table border="1">
+<col width="200"><col width="500">
+
+<tr>
+	<th>아이디</th>
+	<td><%=user %></td>
+</tr>
+
+<tr>
+	<th>제목</th>
+	<td><input type="text" name="title" size="50" value="<%=data[0].TITLE %>"></td>
+</tr>
+<tr>
+	<th>작성일</th>
+	<td><%=data[0].WDATE %></td>
+</tr>
+<tr>
+	<th>내용</th>
+	<td><textarea rows="20" cols="50" name="content"><%=data[0].CONTENT %></textarea></td>
+</tr>
+
+<tr>
+	<td colspan="2" align="center">
+		<input type="submit" value="수정완료">
+	</td>
+</tr>
+
+</table>
+</form>
+</div>
+</body>
+</html>

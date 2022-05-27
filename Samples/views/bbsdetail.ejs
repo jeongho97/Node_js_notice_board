@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>bbsdetail입니다</h2>
+    <div align="center">
+        <table border = "1">
+        <col width="70"><col width="600">
+        <tr>
+           <th> 작성자</th>
+              <td><%= data[0].ID %></td>
+        </tr>
+        <tr>
+           <th>조회수</th>
+              <td><%= data[0].READCOUNT %></td>
+        </tr>
+        <tr>
+           <th> 작성일</th>
+              <td><%= data[0].WDATE %></td>
+        </tr>
+        <tr>
+           <th> 제목</th>
+              <td><%= data[0].TITLE %></td>
+        </tr>
+        <tr>
+           <th> 정보</th>
+              <td><%= data[0].REF %> - <%= data[0].STEP %> - <%= data[0].DEPTH %></td>
+        </tr>
+        <tr>
+           <th> 내용</th>
+              <td><%= data[0].CONTENT %></td>
+        </tr>
+        
+        
+        </table>
+        <br>
+        <button type="button" onclick="location.href='answer?seq=<%= data[0].SEQ %>'">답글</button>
+        <button type="button" onclick="location.href='bbslist'">글목록</button>
+        <%
+        if(data[0].ID==user){
+        %>
+
+        <button type="button" onclick="location.href='update?seq=<%= data[0].SEQ %>'">수정</button>
+        <button type="button" onclick="location.href='delete?seq=<%= data[0].SEQ %>'">삭제</button>
+
+        <%
+        }
+        %>
+        </div>
+</body>
+</html>
