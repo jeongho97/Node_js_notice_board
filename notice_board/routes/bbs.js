@@ -47,6 +47,7 @@ app.get('/bbslist',function(req,res){
     var start = sn * 10 + 1; //1   11  21
     var end = (sn + 1) * 10; //10  20  30
 
+    //페이지에 글을 나타내기 위해 1페이지에서는 행 번호가 1부터 10번까지만 뽑아내고 2페이지에서는 행 번호가 11부터 20번 까지만 뽑아내는 과정을 반복한다
     sql= " SELECT SEQ, ID, REF, STEP, DEPTH, "
        + "        TITLE, CONTENT, WDATE, DEL, READCOUNT "
        + " FROM ";
@@ -193,12 +194,12 @@ app.post('/answerAf',function(req,res){
     var content=req.body.content;
     console.log(seq+" "+title+" "+content);
 
-    //update
+    //update 이미 달려있는 답글들의 STEP(행)을 미리 1씩 증가 시켜놓음
 		var sql1=" UPDATE BBS "
                 +" SET STEP=STEP+1 "
                 +" WHERE REF = (SELECT REF FROM (SELECT REF FROM BBS a WHERE SEQ=?) A ) " //select를 두번쓴 이유는 mysql상 alias를 해줘서 값을 넘겨줘야 오류가 안생긴다. 오라클은 오류x
                 +" AND STEP > (SELECT STEP FROM (SELECT STEP FROM BBS b WHERE SEQ=?) B ) ";
-    //insert
+    //insert 답글을 달 해당 글의 STEP보다 1 증가시키고 오른쪽으로 한칸 움직여서 구분해주기 위해 DEPTH를 기존 글의 DEPTH보다 1 크게 증가시킨다
         var sql2=" INSERT INTO BBS(ID, REF, STEP, DEPTH, TITLE, CONTENT, WDATE, DEL, READCOUNT) "
                 +" VALUES(?, "
                 +"            (SELECT REF FROM BBS a WHERE SEQ=?), "
